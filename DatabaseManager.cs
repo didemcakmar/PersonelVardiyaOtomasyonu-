@@ -14,16 +14,11 @@ namespace PersonelVardiyaOtomasyonu.Tablolar
     {
         public DbSet<Personel> personel { get; set; }
         public DbSet<İzinler> izinler { get; set; }
+        public DbSet<Vardiya> vardiya { get; set; }
         public DbSet<Yonetici> yonetici { get; set; }
 
-		public DbSet<Vardiyalar> vardiyalar { get; set; }
-
-		public DbSet<VardiyaKontrol> vardiyeKontrol { get; set; }
-
-		public DbSet<VardiyaKayit> vardiya_kayit { get; set; }
-
-		//Database bağlantısı
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //Database bağlantısı
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=PersonelVardiyaOtomasyonu;Integrated Security=True");
         }

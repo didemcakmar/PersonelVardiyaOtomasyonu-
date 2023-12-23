@@ -20,8 +20,6 @@ namespace PersonelVardiyaOtomasyonu.Tablolar
         public string sifre { get; set; }
         public string telefon { get; set; }
         public string kimlik_no { get; set; }
-
-		public string izin_günü { get; set; }
-	}
+    }
 }
 

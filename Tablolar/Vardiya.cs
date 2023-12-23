@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace PersonelVardiyaOtomasyonu.Tablolar
 {
-    public class İzinler
-	{
-
+    public class Vardiya
+    {
         [Key]
         public int id { get; set; }
-        public int pers_sicil { get; set; }
+        public int pers_sicil{ get; set; }
+        public int vard_bas_saat { get; set; }
+        public int vard_bit_saat { get; set; }
+        public string vard_gun { get; set; }
+        public string vard_konum { get; set; }
 
-        public int izin_bas_saat { get; set; }
-        public int izin_bit_saat { get; set; }
-        public string izin_bas_tar { get; set; }
-        public string izin_bit_tar { get; set; }
     }
 }

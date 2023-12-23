@@ -23,13 +23,9 @@ namespace PersonelVardiyaOtomasyonu
 
 		private void LoadData()
 		{
-			var izinler = _context.izinler.Where(i => i.durum == "1").ToList();
+			var izinler = _context.izinler.ToList();
 			_dataTable = ToDataTable(izinler);
 			izinlerDataTable.DataSource = _dataTable;
-
-			// "id" ve "durum" sütunlarını DataGridView üzerinde gizle
-			izinlerDataTable.Columns["id"].Visible = false;
-			izinlerDataTable.Columns["durum"].Visible = false;
 		}
 
 		private DataTable ToDataTable<T>(List<T> items)
@@ -57,6 +53,8 @@ namespace PersonelVardiyaOtomasyonu
 		private void UpdateTextBoxesFromSelectedRow(DataGridViewRow selectedRow)
 		{
 			pers_sicil_noTextBox.Text = selectedRow.Cells["pers_sicil"].Value?.ToString();
+			izin_bas_saat_textBox.Text = selectedRow.Cells["izin_bas_saat"].Value?.ToString();
+			izin_bit_saat_textBox.Text = selectedRow.Cells["izin_bit_saat"].Value?.ToString();
 			izin_bas_tar_dateTimePicker.Text = selectedRow.Cells["izin_bas_tar"].Value?.ToString();
 			izin_bit_tar_dateTimePicker.Text = selectedRow.Cells["izin_bit_tar"].Value?.ToString();
 		}
@@ -85,15 +83,18 @@ namespace PersonelVardiyaOtomasyonu
 				}
 
 				// Parse input values
-				if (int.TryParse(pers_sicil_noTextBox.Text, out int sicil))
+				if (int.TryParse(pers_sicil_noTextBox.Text, out int sicil) &&
+					int.TryParse(izin_bas_saat_textBox.Text, out int izinBasSaat) &&
+					int.TryParse(izin_bit_saat_textBox.Text, out int izinBitSaat))
 				{
 					// Create new izin entity
 					var izin = new Tablolar.İzinler
 					{
 						pers_sicil = sicil,
+						izin_bas_saat = izinBasSaat,
+						izin_bit_saat = izinBitSaat,
 						izin_bas_tar = izin_bas_tar_dateTimePicker.Text,
 						izin_bit_tar = izin_bit_tar_dateTimePicker.Text,
-						durum = "1",
 					};
 
 					// Add izin to the context
@@ -122,6 +123,8 @@ namespace PersonelVardiyaOtomasyonu
 		private bool ValidateInput()
 		{
 			return !string.IsNullOrWhiteSpace(pers_sicil_noTextBox.Text) &&
+				   !string.IsNullOrWhiteSpace(izin_bas_saat_textBox.Text) &&
+				   !string.IsNullOrWhiteSpace(izin_bit_saat_textBox.Text) &&
 				   !string.IsNullOrWhiteSpace(izin_bas_tar_dateTimePicker.Text) &&
 				   !string.IsNullOrWhiteSpace(izin_bit_tar_dateTimePicker.Text);
 		}
@@ -141,6 +144,8 @@ namespace PersonelVardiyaOtomasyonu
 						// Input validation
 
 						selectedPerson.pers_sicil = int.Parse(pers_sicil_noTextBox.Text);
+						selectedPerson.izin_bas_saat = int.Parse(izin_bas_saat_textBox.Text);
+						selectedPerson.izin_bit_saat = int.Parse(izin_bit_saat_textBox.Text);
 						selectedPerson.izin_bas_tar = izin_bas_tar_dateTimePicker.Text;
 						selectedPerson.izin_bit_tar = izin_bit_tar_dateTimePicker.Text;
 
@@ -185,15 +190,13 @@ namespace PersonelVardiyaOtomasyonu
 		private void ButtonReset_Click(object sender, EventArgs e)
 		{
 			pers_sicil_noTextBox.Text = "";
-
+			izin_bas_saat_textBox.Text = "";
+			izin_bit_saat_textBox.Text = "";
 			izin_bas_tar_dateTimePicker.Text = "";
 			izin_bit_tar_dateTimePicker.Text = "";
 			izinlerDataTable.ClearSelection();
 		}
 
-		internal static object FirstOrDefault(Func<object, bool> value)
-		{
-			throw new NotImplementedException();
-		}
+
 	}
 }

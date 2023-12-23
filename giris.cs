@@ -30,7 +30,7 @@ namespace PersonelVardiyaOtomasyonu
 				var personel = context.personel.FirstOrDefault(p => p.email == mail && p.sifre == password);
 				if (personel != null)
 				{
-					menu mainForm = new menu();
+					personel mainForm = new personel();
 					mainForm.Show();
 					this.Hide();
 				}
